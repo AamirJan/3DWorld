@@ -1,5 +1,5 @@
 {
-  "name": "chat",
+  "name": "chatrooms",
   "version": "0.0.1",
   "description": "Minimalist multi-room chat server",
   "dependencies": {
@@ -12,13 +12,5 @@
   "main": "server.js",
   "devDependencies": {},
   "author": "",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AamirJan/chat.git"
-  },
-  "bugs": {
-    "url": "https://github.com/AamirJan/chat/issues"
-  },
-  "homepage": "https://github.com/AamirJan/chat"
+  "license": "ISC"
 }
