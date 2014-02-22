@@ -1,25 +1,22 @@
 {
-  "name": "3D World",
-  "version": "0.0.1",
-  "description": "3D World",
+  "name": "3DWorld",
+  "version": "0.0.0",
+  "description": "3DWorld =======",
+  "main": "server.js",
   "dependencies": {
-    "mime": "~1.2.7"
+    "mime": "~1.2.11"
   },
-  "engines": {
-        "node": "0.10.25",
-        "npm": "1.3.24"
-  },
+  "devDependencies": {},
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "main": "server.js",
-  "devDependencies": {},
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/AamirJan/3DWorld.git"
   },
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/AamirJan/3DWorld/issues"
   },
