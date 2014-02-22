@@ -1,7 +1,7 @@
 {
-  "name": "chat",
+  "name": "3D World",
   "version": "0.0.1",
-  "description": "Minimalist multi-room chat server",
+  "description": "3D World",
   "dependencies": {
     "mime": "~1.2.7"
   },
