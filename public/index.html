@@ -1,6 +1,183 @@
 <!DOCTYPE html>
+<meta charset="utf-8"/>
 <html>
+<head>
+<title>Fractions</title>
+<style>
+body
+{
+   background-image:url('paper.jpg');
+   text-align:center;
+   font-family:"Helvetica";
+   font-size:40px;
+   /*width:520px;*/
+   margin:0; 
+   padding:0; 
+   border:0;
+}
+#header /* page header */
+{
+   color:black;
+   text-align:center;
+}
+#problem /* problem string */
+{
+   color:blue;
+   text-align:center;
+}
+#hint /* hint string */
+{
+   color:green;
+   text-align:center;
+   font-size:20px;
+}
+</style>
+</head>
+
 <body>
-Hello
+<p id="header">Fractions</p>
+<p id="problem"></p>
+<p id="hint"></p>
+
+<svg width="5cm" height="5cm" viewBox="0 0 500 500"
+   xmlns="http://www.w3.org/2000/svg" version="1.1" >
+   
+   <rect width="500" height="500" stroke:"black" stroke-width="1" />
+   
+   <path d="M250,250 h-200 a200,200 0 1,0 200,-200 z"
+   fill="magenta" stroke="black" stroke-width="1" />
+   
+   <path d="M250,250 v-200 a200,200 0 0,0 -200,200 z"
+   fill="cyan" stroke="black" stroke-width="1" />
+</svg>
+
+<br>
+<button type="button" onclick="mixedToImproper()">Mixed &#8594; Improper</button>
+<button type="button" onclick="improperToMixed()">Improper &#8594; Mixed</button>
+<br>
+<button type="button" onclick="fracToDecimal()">Fraction &#8594; Decimal</button>
+<button type="button" onclick="decToFraction()">Decimal &#8594; Fraction</button>
+<br>
+<script>
+var maxw = 20, maxn = 5, maxd = 5;
+var hint = true;
+var probStr = "", hintStr = "";
+
+function swap(a, b)
+{
+   [a, b] = [b, a];
+}
+function gcd(a, b)
+{
+   if (!b) return a;
+   return gcd(b, a % b);
+}
+function lcm(a, b)
+{
+   return a * b / gcd(a, b);
+}
+function lowestForm(a, b)
+{
+   var g = gcd(a, b);
+   if (g > 1)
+   {
+      a /= g;
+      b /= g;
+   }
+   return [a, b];
+}
+function isLowestForm(a, b)
+{
+   return (gcd(a, b) == 1);
+}
+function getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function getRandomArbitary (min, max) {
+    return Math.random() * (max - min) + min;
+}
+function clrStr()
+{
+   probStr = "";
+   hintStr = "";
+   document.getElementById("problem").innerHTML = "";
+   document.getElementById("hint").innerHTML    = "";   
+}
+function mixedToImproper()
+{
+   clrStr();
+   var w = getRandomInt(1, maxw);
+   var n = getRandomInt(1, maxn);
+   var d = getRandomInt(2, maxd);
+   while (n >= d)
+   {
+      n = getRandomInt(1, maxn);
+      d = getRandomInt(2, maxd);
+   }
+   [n, d] = lowestForm(n, d);
+   var iFracN = w * d + n;
+   var iFracD = d;
+   probStr += w + "  " + n + '&#8260;' + d + " = " + iFracN + '&#8260;' + iFracD;
+   if (hint)
+   {
+      hintStr += " (" + d + " " + '&times;' + " " + w + " + " + n + " = " + iFracN + ")";
+   }
+   document.getElementById("problem").innerHTML = probStr;
+   document.getElementById("hint").innerHTML    = hintStr;
+}
+function improperToMixed()
+{
+   clrStr();
+   var n = getRandomInt(1, maxn);
+   var d = getRandomInt(2, maxd);
+   while (n <= d)
+   {
+      n = getRandomInt(1, maxn);
+      d = getRandomInt(2, maxd);
+   }
+   var w = Math.floor(n / d);
+   var r = n % d;
+   if (r == 0)
+   {
+      probStr += n + '&#8260;' + d + " = " + w;
+   } 
+   else 
+   {
+      [r2, d2] = lowestForm(r, d);
+      probStr += n + '&#8260;' + d + " = " + w + "  " + r2 + '&#8260;' + d2;
+   }
+   if (hint)
+   {
+      hintStr += " (" + n + " " + '&divide;' + " " + d + " = " + w + "r" + r;
+   }
+   if (!isLowestForm(r, d) && r != 0)
+   {
+      hintStr += ", " + r + '&#8260;' + d + " = " + r2 + '&#8260;' + d2;
+   }
+   hintStr += ")";
+   document.getElementById("problem").innerHTML = probStr;
+   document.getElementById("hint").innerHTML    = hintStr;
+}
+function fracToDecimal()
+{
+   clrStr();
+   var n = getRandomInt(1, maxn);
+   var d = getRandomInt(2, maxd);
+   var dec = n / d;
+   //approx. equal '&#8776;'
+   probStr += n + '&#8260;' + d + " = " + dec;
+   document.getElementById("problem").innerHTML = probStr;
+}
+function decToFraction()
+{
+   clrStr();
+   var n = getRandomInt(1, maxn);
+   var d = getRandomInt(2, maxd);
+   var dec = n / d;
+   [n2, d2] = lowestForm(n, d);
+   probStr += dec + " = " + n2 + '&#8260;' + d2;
+   document.getElementById("problem").innerHTML = probStr;
+}
+</script>
 </body>
 </html>
