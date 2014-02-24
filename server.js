@@ -1,52 +1,73 @@
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
+var http  = require('http'),
+    fs    = require('fs'),
+    path  = require('path'),
+    mime  = require('mime');
+    
 var cache = {};
 
-function send404(response) {
-   response.writeHead(404, {'Content-Type': 'text/plain'});
-   response.write('Error 404: resource not found.');
-   response.end();
+function send404(res) 
+{
+   res.writeHead(404, {'Content-Type': 'text/plain'});
+   res.write('Error 404: resource not found.');
+   res.end();
 }
 
-function sendFile(response, filePath, fileContents) {
-   response.writeHead(200,{"content-type": mime.lookup(path.basename(filePath))});
-   response.end(fileContents);
+function sendFile(res, filePath, fileContents) 
+{
+   res.writeHead(200, {"content-type": mime.lookup(path.basename(filePath))});
+   res.end(fileContents);
 }
 
-function serveStatic(response, cache, absPath) {
-   if (cache[absPath]) {
-      sendFile(response, absPath, cache[absPath]);
-   } else {
-      fs.exists(absPath, function(exists) {
-         if (exists) {
-            fs.readFile(absPath, function(err, data) {
+function serveStatic(res, cache, absPath) 
+{
+   if (cache[absPath]) 
+   {
+      sendFile(res, absPath, cache[absPath]);
+   } 
+   else 
+   {
+      fs.exists(absPath, function(exists) 
+      {
+         if (exists) 
+         {
+            fs.readFile(absPath, function(err, data) 
+            {
                if (err) {
-                  send404(response);
-               } else {
+                  send404(res);
+               } 
+               else 
+               {
                   cache[absPath] = data;
-                  sendFile(response, absPath, data);
+                  sendFile(res, absPath, data);
                }
             });
-         } else {
-            send404(response);
+         } 
+         else 
+         {
+            send404(res);
          }
       });
    }
 }
 
-var server = http.createServer(function(request, response) {
+var server = http.createServer(function(req, res) 
+{
    var filePath = false;
-   if (request.url == '/') {
-      filePath = 'index.html';
-   } else {
-      filePath = request.url;
+   if (req.url == '/') 
+   {
+      filePath = 'home.html';
+   } 
+   else 
+   {
+      filePath = req.url;
    }
    var absPath = './' + filePath;
-   serveStatic(response, cache, absPath);
+   serveStatic(res, cache, absPath);
 });
 
-server.listen(3000, function() {
-   console.log("Server listening on port 3000.");
+var port = process.env.PORT || 3000;
+//	app.listen(port);
+server.listen(port, function() 
+{
+   console.log("Server listening on port " + port);
 });
