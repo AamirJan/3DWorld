@@ -55,7 +55,7 @@ var server = http.createServer(function(req, res)
    var filePath = false;
    if (req.url == '/') 
    {
-      filePath = 'home.html';
+      filePath = 'index.html';
    } 
    else 
    {
