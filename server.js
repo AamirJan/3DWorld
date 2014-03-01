@@ -14,7 +14,7 @@ function send404(res)
 
 function sendFile(res, filePath, fileContents) 
 {
-   res.writeHead(200, {"content-type": mime.lookup(path.basename(filePath))});
+   res.writeHead(200, {'content-type': mime.lookup(path.basename(filePath))});
    res.end(fileContents);
 }
 
@@ -66,8 +66,8 @@ var server = http.createServer(function(req, res)
 });
 
 var port = process.env.PORT || 3000;
-//	app.listen(port);
 server.listen(port, function() 
 {
-   console.log("Server listening on port " + port);
+   console.log('Server listening on port ' + port);
 });
+app.listen(port);
